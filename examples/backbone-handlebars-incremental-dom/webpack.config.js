@@ -29,6 +29,21 @@ module.exports = {
     }, {
       "test":    /\.hbs$/,
       "loader":  "handlebars-incremental-dom/webpack-loader"
+      // "loader": "webpack-loader"
     }]
-  }
+  },
+  resolve: {
+    alias: {
+      Lib:        path.resolve(__dirname, 'js/lib/'),
+      Components: path.resolve(__dirname, 'js/components/'),
+      Models:     path.resolve(__dirname, 'js/models/'),
+      Templates:  path.resolve(__dirname, 'templates/')
+    }
+  }//,
+  // resolveLoader: {
+  //   modulesDirectories: [
+  //     "node_modules",
+  //     path.resolve(__dirname, 'js/lib/'),
+  //   ]
+  // }
 };

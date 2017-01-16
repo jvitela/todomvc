@@ -1,38 +1,32 @@
-import _        from 'underscore'
 import Backbone from 'backbone'
 
 export default class ComponentView extends Backbone.View {
-  initialize({ state, template }) {
-    console.log("ComponentView::initialize");
-    this.setTemplate(template).setState(state);
-  }
-
-  componentDidUpdate() {
+  getState() { 
     return this;
   }
 
-  getState() { 
-    return null;
-  }
-
   setState(data) {
+    _.extend(this, data);
     return this;
   }
 
   setTemplate(template) {
-    template && (this._template = template);
+    if (typeof template === "function") {
+      this._template = template; 
+    }
     return this;
   }
 
   render() {
-    console.log("ComponentView::render");
-
+    let state = this.getState();
+    
     if (this._template) {
-      this._template.render(this.getState());
+      this._template(state);
+
     } else if (this.template) {
-      this.template(this.el, this.getState());
+      this.template(this.el, state);
     }
-    _.defer(() => this.componentDidUpdate());
+
     return this;
   }
 }

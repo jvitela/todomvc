@@ -1,18 +1,14 @@
 // import handlebars from 'handlebars-incremental-dom'
 // import jQuery   from 'jquery'
-import Adapter  from './lib/backbone-hbs-idom-adapter'
-import TodosApp from './components/TodosApp'
+import Adapter  from 'Lib/backbone-hbs-idom-adapter'
+import TodosApp from 'Components/TodosApp'
 
 (function (window) {
-  
-  Adapter.initialize();
-  // handlebars.compile('<todos-app></todos-app>')(document.getElementById('app'));
-  let app = new TodosApp({
-    el: document.getElementById('app')
-  });
-  app.render();
-  console.log("ready to rock");
 
+  Adapter.initialize();
+  let app = new TodosApp({});
+  document.getElementById('app').appendChild(app.render().el);
+  window.app = app;
 })(window);
 
 /*

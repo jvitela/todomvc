@@ -20,33 +20,24 @@ function getViewInstance(node) {
  * @param  Object props  Properties map
  * @return Object        The view instance
  */
-function viewsFactory(props, template) {
-  let el   = template.el;
+function viewsFactory(el, cmpName, props, template) {
   let cid  = el[VIEW_CID];
   let view = cid && ViewInstances[cid];
   if (!view) {
-    name = el.tagName.toLowerCase();
 
     // Not registered
-    if (!ViewClasses[name]) {
+    if (!ViewClasses[cmpName]) {
       return null;
     }
 
     // Instantiate the component
-    view = new ViewClasses[name]({
-      el,
-      props,
-      template,
-    });
+    view = new ViewClasses[cmpName]({ el });
     cid = el[VIEW_CID] = view.cid;
     ViewInstances[cid] = view;
     console.log('viewsFactory::create', el, view);
   }
-  else {
-    view.setTemplate(template);
-    view.setState(props);    
-  }
 
+  view.setTemplate(template).setState(props);
   return view;
 }
 
@@ -118,6 +109,7 @@ function initialize() {
   handlebars.idom.notifications.nodesDeleted = garbageCollector;
 }
 
+window.handlebars = handlebars;
 window.views = ViewInstances;
 export default {
   initialize:        initialize,

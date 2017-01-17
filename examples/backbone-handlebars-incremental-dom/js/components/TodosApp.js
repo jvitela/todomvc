@@ -1,5 +1,6 @@
 import {component, event, props, defaults} from 'Lib/backbone-decorators'
 import ComponentView      from 'Components/ComponentView'
+import _                  from 'underscore'
 import Backbone           from 'backbone'
 import template           from 'Templates/todos-app.hbs'
 
@@ -16,12 +17,14 @@ import TodosCollection from 'Models/TodosCollection'
 })
 export default class TodosApp extends ComponentView {
   initialize() {
+    this.order = 0;
     this.todosList = new TodosCollection();
     this.listenTo(this.todosList, "add remove", this.render);
   }
 
   createTodo(title) {
-    this.todosList.add({ title });
+    let order = ++this.order;
+    this.todosList.add({ title, order });
   }
 
   getState() {

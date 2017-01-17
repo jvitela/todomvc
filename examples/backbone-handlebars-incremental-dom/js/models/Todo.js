@@ -1,10 +1,13 @@
-import {defaults} from 'Lib/backbone-decorators'
+import {props} from 'Lib/backbone-decorators'
 import Backbone   from 'backbone'
 
-@defaults({
-  title: "",
-  order: 0,
-  completed: false
+@props({
+	"idAttribute": "order",
+	"defaults" : {
+	  title: "",
+	  order: 0,
+	  completed: false
+	}
 })
 export default class Todo extends Backbone.Model {
   reset() {

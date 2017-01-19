@@ -9,18 +9,13 @@ import TodosCollection    from 'Models/TodosCollection'
   template: template
 })
 export default class TodosList extends ComponentView {
-  initialize() {
-    this.todos = new TodosCollection();
-    this.listenTo(this.todos, "add remove", this.render);
-  }
-
   setState({ todos }) {
-    this.todos.set(todos);
+    this.todos = todos;
+    this.listenTo(this.todos, "add remove", this.render);
   }
 
   getState() {
     let todos = this.todos.toJSON();
-    console.log(this.todos);
     return { todos };
   }
 }

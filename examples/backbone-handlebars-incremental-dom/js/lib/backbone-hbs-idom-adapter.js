@@ -16,11 +16,12 @@ function getViewInstance(node) {
 
 /**
  * Creates or retrieves a view for the given DOM element and runs the update method
- * @param  Element el    The DOM Element to associate to a View
- * @param  Object props  Properties map
- * @return Object        The view instance
+ * @param  Element el       The DOM Element to associate to a View
+ * @param  string  cmpName  The component tag name 
+ * @param  Object  props    Properties map
+ * @return Object  opts     Config options to pass to the template
  */
-function viewsFactory(el, cmpName, props, template) {
+function viewsFactory(el, cmpName, props, opts) {
   let cid  = el[VIEW_CID];
   let view = cid && ViewInstances[cid];
   if (!view) {
@@ -34,10 +35,11 @@ function viewsFactory(el, cmpName, props, template) {
     view = new ViewClasses[cmpName]({ el });
     cid = el[VIEW_CID] = view.cid;
     ViewInstances[cid] = view;
-    console.log('viewsFactory::create', el, view);
+    // console.log('viewsFactory::create', el, view);
   }
 
-  view.setTemplate(template).setState(props);
+  view.configTemplate(opts);
+  view.setState(props);
   return view;
 }
 
@@ -50,7 +52,7 @@ function garbageCollector(nodes) {
   nodes.forEach((node) => {
     view = getViewInstance(node);
     if (view) {
-      console.log('garbageCollector::delete', node, view);
+      // console.log('garbageCollector::delete', node, view);
       view.remove();
       ViewInstances[view.cid] = null;
     }
@@ -64,7 +66,7 @@ function garbageCollector(nodes) {
  */
 function registerComponent(tagName, View) {
   if (typeof View.prototype.template === "string") {
-    console.log(`registerComponent: Compiling template for ${tagName} ...`);
+    // console.log(`registerComponent: Compiling template for ${tagName} ...`);
     compile(View.prototype.template, {'name': tagName});
   }
   ViewClasses[tagName] = View;

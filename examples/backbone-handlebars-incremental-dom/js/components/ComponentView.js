@@ -10,24 +10,15 @@ export default class ComponentView extends Backbone.View {
     return this;
   }
 
-  setTemplate(template) {
-    if (typeof template === "function") {
-      this._template = template; 
-    }
+  configTemplate(opts) {
+    this._templateOptions = opts;
     return this;
   }
 
   render() {
-    let state = this.getState();
-    state.id  = state.id || ('cid:' + this.cid);
-
-    if (this._template) {
-      this._template(state);
-
-    } else if (this.template) {
-      this.template(this.el, state);
-    }
-
+    let data = this.getState();
+    console.log(this.el.tagName + ':' + this.cid);
+    this.template(this.el, data, this._templateOptions);
     return this;
   }
 }

@@ -8,7 +8,7 @@ import TodosHeader from 'Components/TodosHeader'
 import TodosList   from 'Components/TodosList'
 import TodosFooter from 'Components/TodosFooter'
 
-import Todo            from 'Models/Todo'
+// import Todo            from 'Models/Todo'
 import TodosCollection from 'Models/TodosCollection'
 
 @component({

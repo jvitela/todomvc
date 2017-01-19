@@ -39,6 +39,7 @@ function viewsFactory(el, cmpName, props, opts) {
   }
 
   view.configTemplate(opts);
+  // TODO: this might trigger model changes and new renders o_O!
   view.setState(props);
   return view;
 }

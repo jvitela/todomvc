@@ -16,13 +16,13 @@ export default class TodosHeader extends ComponentView {
     this.listenTo(this.todo, "change", this.render);
   }
 
-  @event('input .new-todo')
+  // @event('input .new-todo')
   inputChange(event) {
     let title = event.currentTarget.value.trim();
     title && this.todo.set({ title });
   }
 
-  @event('keypress .new-todo')
+  // @event('keypress .new-todo')
   onEnter(event) {
     let title = this.todo.get("title");
     if (title && event.which === ENTER_KEY) {
@@ -35,7 +35,7 @@ export default class TodosHeader extends ComponentView {
     this.onInput = oninput;
   }
 
-  getState() {
-    return this.todo.toJSON();
-  }
+  // getState() {
+  //   return this.todo.toJSON();
+  // }
 }

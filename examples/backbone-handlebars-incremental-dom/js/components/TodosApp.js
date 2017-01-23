@@ -31,13 +31,13 @@ export default class TodosApp extends ComponentView {
     this.todosList.remove(todo);
   }
 
-  getState() {
-    return {
-      list:       this.todosList,
-      createTodo: (title) => this.createTodo(title),
-      removeTodo: (todo)  => this.removeTodo(todo),
-    };
-  }
+  // getState() {
+  //   return {
+  //     list:       this.todosList,
+  //     createTodo: (title) => this.createTodo(title),
+  //     removeTodo: (todo)  => this.removeTodo(todo),
+  //   };
+  // }
 }
 
 

@@ -1,5 +1,5 @@
 <todos-header oninput={{createTodo}}></todos-header>
-<todos-list todos={{list}} onremove={{removeTodo}}></todos-list>
-{{#if list.length}}
+<todos-list todos={{todosList}} onremove={{removeTodo}}></todos-list>
+{{#if todosList.length}}
 <todos-footer></todos-footer>
 {{/if}}

@@ -6,7 +6,7 @@ export default class ComponentView extends Backbone.View {
   }
 
   setState(data) {
-    _.extend(this, data);
+    // _.extend(this, data);
     return this;
   }
 

@@ -2,14 +2,23 @@
   <input class="toggle-all" type="checkbox"/>
   <label for="toggle-all">Mark all as complete</label>
   <ul class="todo-list">
-    {{#each todos}}
-    <li class="{{if completed 'completed'}} {{if editing 'editing'}}">
-      <div class="view">
-        <input class="toggle" type="checkbox" {{if completed checked=true}} />
-        <label>{{title}}</label>
-        <button class="destroy"></button>
+    {{#each todos.models}}
+    <li class="{{if attributes.completed 'completed'}} {{if attributes.editing 'editing'}}">
+      <div class="view" ondblclick={{call ../toggleEditing this}}>
+        <input 
+          class="toggle" 
+          type="checkbox" 
+          {{if attributes.completed checked=true}}
+          onclick={{call ../toggleCompleted this}} />
+        <label>{{attributes.title}}</label>
+        <button class="destroy" onclick={{call ../removeTodo this}}></button>
       </div>
-      <input class="edit" value={{title}} />
+      <input 
+        class="edit" 
+        value={{attributes.title}} 
+        data-order={{attributes.order}}
+        onkeypress={{call ../onKeyPress this}} 
+        onkeydown={{call ../onKeyDown this}} />
     </li>
     {{/each}}
   </ul>

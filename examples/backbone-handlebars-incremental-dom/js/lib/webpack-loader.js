@@ -40,7 +40,7 @@ module.exports = function(source) {
   'hbs.registerPartial("' + path +'",   render);' +
   'hbs.registerComponent("' + path +'", viewModel);'+
   'viewModel.prototype.__template = render;'+
-  'console.log("Paths", "' + path +','+ cls +'");'+
-  'console.log("View Model", viewModel);'+
+  // 'console.log("Paths", "' + path +','+ cls +'");'+
+  // 'console.log("View Model", viewModel);'+
   'module.exports = viewModel;';
 };

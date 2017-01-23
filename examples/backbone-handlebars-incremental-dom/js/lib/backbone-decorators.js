@@ -16,20 +16,31 @@ export function component({tagName, template = null}) {
 
 export function event(eventName) {
   return function decorator(target, name, descriptor) {
-    if(!target.events) {
+    if (!target.events) {
       target.events = {};
     }
-    if(_.isFunction(target.events)) {
+    if (_.isFunction(target.events)) {
       throw new Error('The event decorator is not compatible with an events method');
       return;
     }
-    if(!eventName) {
+    if (!eventName) {
       throw new Error('The event decorator requires an eventName argument');
     }
     target.events[eventName] = name;
     return descriptor;
   }
 }
+
+// export function bind() {
+//   return function decorator(target, name, descriptor) {
+//     if (!_.isFunction(target[name])) {
+//       throw new Error('The bind decorator is only compatible with methods');
+//       return;
+//     }
+//     target[name] = _.bind(target[name], target);
+//     return descriptor;
+//   }
+// }
 
 export function defaults(defaultProps) {
   return function decorator(target) {

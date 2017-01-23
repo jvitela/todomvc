@@ -79,18 +79,19 @@ function registerComponent(tagName, View) {
 function registerHandlebarsHelpers() {
 
   // {{call method p1 p2 ...p3}}
-  handlebars.registerHelper('call', function(fn) {
-    let args   = Array.from(arguments).slice(1);
+  handlebars.registerHelper('call', function(fn, ...params) {
+    let opts = params.pop(); // remove the handlebars data
     return function(event) {
-      args.push(event);
-      return fn.apply(this, args);
+      let args = params.slice(); // create a copy
+      args.push(event);          // append event
+      return fn.apply(opts.data.root, args);
     };
   });
 
   // {{inc number}}
-  handlebars.registerHelper('inc', function(index) {
-    return parseInt(index) + 1;
-  });
+  // handlebars.registerHelper('inc', function(index) {
+  //   return parseInt(index) + 1;
+  // });
 }
 
 /**

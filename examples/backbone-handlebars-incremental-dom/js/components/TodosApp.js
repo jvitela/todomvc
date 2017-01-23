@@ -19,7 +19,7 @@ export default class TodosApp extends ComponentView {
   initialize() {
     this.order = 0;
     this.todosList = new TodosCollection();
-    // this.listenTo(this.todosList, "add remove", this.render);
+    this.listenTo(this.todosList, "add remove", this.render);
   }
 
   createTodo(title) {
@@ -27,10 +27,15 @@ export default class TodosApp extends ComponentView {
     this.todosList.add({ title, order });
   }
 
+  removeTodo(todo) {
+    this.todosList.remove(todo);
+  }
+
   getState() {
     return {
       list:       this.todosList,
-      createTodo: _.bind(this.createTodo, this)
+      createTodo: (title) => this.createTodo(title),
+      removeTodo: (todo)  => this.removeTodo(todo),
     };
   }
 }

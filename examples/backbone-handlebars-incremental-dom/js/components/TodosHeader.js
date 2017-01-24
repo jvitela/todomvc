@@ -19,12 +19,16 @@ export default class TodosHeader extends ComponentView {
   // @event('input .new-todo')
   inputChange(event) {
     let title = event.currentTarget.value.trim();
-    title && this.todo.set({ title });
+    // title && this.todo.set({ title });
+    if (title) {
+      this.todo.title = title;
+    }
   }
 
   // @event('keypress .new-todo')
   onEnter(event) {
-    let title = this.todo.get("title");
+    // let title = this.todo.get("title");
+    let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {
       this.onInput(title);
       this.todo.reset();

@@ -24,6 +24,9 @@ export default class TodosList extends ComponentView {
   // removeTodo;
 
   setState({ todos, onremove }) {
+    if (this.todos) {
+      this.stopListening(this.todos);
+    }
     this.todos      = todos;
     this.removeTodo = onremove;
     this.listenTo(this.todos, "add remove change", this.render);

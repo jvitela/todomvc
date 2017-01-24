@@ -42,14 +42,33 @@ export function event(eventName) {
 //   }
 // }
 
+
+/**
+ * Took from http://babeljs.io/
+ */
+function defineProperties(target, props) {
+  for (let i = 0; i < props.length; i++) {
+    let key = props[i];
+    let get = function get()    { return this.get(key);      };
+    let set = function set(val) { return this.set(key, val); };
+    let descriptor = { key,  get, set, enumerable: false, configurable: true };
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
 export function defaults(defaultProps) {
   return function decorator(target) {
     target.prototype.defaults = defaultProps;
+    defineProperties(target.prototype, Object.keys(defaultProps));
   }
 }
 
 export function props(value) {
   return function decorator(target) {
     _.extend(target.prototype, value);
+
+    if (value && value.defaults) {
+      defineProperties(target.prototype, Object.keys(value.defaults));
+    }
   }
 }

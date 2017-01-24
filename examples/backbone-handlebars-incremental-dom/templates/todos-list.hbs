@@ -3,20 +3,19 @@
   <label for="toggle-all">Mark all as complete</label>
   <ul class="todo-list">
     {{#each todos.models}}
-    <li class="{{if attributes.completed 'completed'}} {{if attributes.editing 'editing'}}">
+    <li class="{{if completed 'completed'}} {{if editing 'editing'}}">
       <div class="view" ondblclick={{call ../toggleEditing this}}>
         <input 
           class="toggle" 
           type="checkbox" 
-          {{if attributes.completed checked=true}}
+          {{if completed checked=true}}
           onclick={{call ../toggleCompleted this}} />
-        <label>{{attributes.title}}</label>
+        <label>{{title}}</label>
         <button class="destroy" onclick={{call ../removeTodo this}}></button>
       </div>
       <input 
         class="edit" 
-        value={{attributes.title}} 
-        data-order={{attributes.order}}
+        value={{title}}
         onkeypress={{call ../onKeyPress this}} 
         onkeydown={{call ../onKeyDown this}} />
     </li>

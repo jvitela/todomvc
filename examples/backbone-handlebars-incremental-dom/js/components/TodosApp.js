@@ -19,7 +19,7 @@ export default class TodosApp extends ComponentView {
   initialize() {
     this.order = 0;
     this.todosList = new TodosCollection();
-    this.listenTo(this.todosList, "add remove", this.render);
+    this.listenTo(this.todosList, "add remove change", this.render);
   }
 
   createTodo(title) {

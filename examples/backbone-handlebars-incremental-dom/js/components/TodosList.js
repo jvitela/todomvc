@@ -3,7 +3,7 @@ import ComponentView      from 'Components/ComponentView'
 import template           from 'Templates/todos-list.hbs'
 import _                  from 'underscore'
 
-// import TodosCollection    from 'Models/TodosCollection'
+import TodosCollection    from 'Models/TodosCollection'
 
 const ENTER_KEY = 13;
 const ESC_KEY   = 27;
@@ -13,35 +13,15 @@ const ESC_KEY   = 27;
   template: template
 })
 export default class TodosList extends ComponentView {
-  // initialize() {
-  //   _.bindAll(this, "toggleCompleted", "toggleEditing", "onKeyPress", "onKeyDown");
-  // }
-
-  // @property()
-  // todos;
-
-  // @property()
-  // removeTodo;
-
-  setState({ todos, onremove }) {
-    if (this.todos) {
-      this.stopListening(this.todos);
-    }
-    this.todos      = todos;
-    this.removeTodo = onremove;
+  initialize() {
+    this.todos = new TodosCollection();
     this.listenTo(this.todos, "add remove change", this.render);
   }
 
-  // getState() {
-  //   return {
-  //     todos:           this.todos,
-  //     removeTodo:      _.bind(this.removeTodo,      this),
-  //     toggleCompleted: _.bind(this.toggleCompleted, this),
-  //     toggleEditing:   _.bind(this.toggleEditing,   this),
-  //     onKeyPress:      _.bind(this.onKeyPress,      this),
-  //     onKeyDown:       _.bind(this.onKeyDown,       this),
-  //   };
-  // }
+  setState({ todos, onremove }) {
+    this.todos.set(todos.models);
+    this.removeTodo = onremove;
+  }
 
   toggleCompleted(todo) {
     todo.toggleCompleted();

@@ -1,10 +1,9 @@
-import {component, event} from 'Lib/backbone-decorators'
-import ComponentView      from 'Components/ComponentView'
-import template           from 'Templates/todos-header.hbs'
-import Todo               from 'Models/Todo'
+import {component, debounce} from 'Lib/backbone-decorators'
+import ComponentView from 'Components/ComponentView'
+import template      from 'Templates/todos-header.hbs'
+import Todo          from 'Models/Todo'
 
 const ENTER_KEY = 13;
-const ESC_KEY   = 27;
 
 @component({
   tagName:  'todos-header',
@@ -13,33 +12,26 @@ const ESC_KEY   = 27;
 export default class TodosHeader extends ComponentView {
   initialize() {
     this.todo = new Todo();
-    this.listenTo(this.todo, "change", this.render);
+    this.listenTo(this.todo, 'change:title', this.render);
   }
 
-  // @event('input .new-todo')
+  setState({ onInput }) {
+    this.onInput = onInput;
+  }
+
+  @debounce(300)
   inputChange(event) {
-    let title = event.currentTarget.value.trim();
-    // title && this.todo.set({ title });
+    let title = event.target.value.trim();
     if (title) {
       this.todo.title = title;
     }
   }
 
-  // @event('keypress .new-todo')
   onEnter(event) {
-    // let title = this.todo.get("title");
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {
+      this.todo.title = '';
       this.onInput(title);
-      this.todo.reset();
     }
   }
-
-  setState({ oninput }) {
-    this.onInput = oninput;
-  }
-
-  // getState() {
-  //   return this.todo.toJSON();
-  // }
 }

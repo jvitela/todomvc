@@ -1,13 +1,12 @@
-// import handlebars from 'handlebars-incremental-dom'
-// import jQuery   from 'jquery'
 import Adapter  from 'Lib/backbone-hbs-idom-adapter'
 import TodosApp from 'Components/TodosApp'
 
 (function (window) {
 
   Adapter.initialize();
-  let app = new TodosApp({});
+  let app = new TodosApp();
   document.getElementById('app').appendChild(app.render().el);
+  Backbone.history.start();
   window.app = app;
 })(window);
 

@@ -1,5 +1,16 @@
 <todos-header oninput={{createTodo}}></todos-header>
-<todos-list todos={{todosList}} onremove={{removeTodo}}></todos-list>
-{{#if todosList.length}}
-<todos-footer todos={{todosList}}></todos-footer>
+
+<todos-list 
+  todos={{visibleTodos}} 
+  onremove={{removeTodo}} 
+  onchange={{editTitle}} 
+  oncompleted={{toggleCompleted}}
+  onediting={{toggleEditing}}
+  ></todos-list>
+
+{{#if todos.length}}
+<todos-footer 
+  filter={{filter}}
+  todos={{todos}} 
+  clear-completed={{clearCompleted}}></todos-footer>
 {{/if}}

@@ -35,11 +35,10 @@ function viewsFactory(el, cmpName, props, opts) {
     view = new ViewClasses[cmpName]({ el });
     cid = el[VIEW_CID] = view.cid;
     ViewInstances[cid] = view;
-    // console.log('viewsFactory::create', el, view);
+    // console.log('viewsFactory::create', view.cid);
   }
 
-  view.configTemplate(opts);
-  // TODO: this might trigger model changes and new renders o_O!
+  view.configureTemplate(opts);
   view.setState(props);
   return view;
 }
@@ -53,7 +52,7 @@ function garbageCollector(nodes) {
   nodes.forEach((node) => {
     view = getViewInstance(node);
     if (view) {
-      // console.log('garbageCollector::delete', node, view);
+      // console.log('garbageCollector::delete', view.cid);
       view.remove();
       ViewInstances[view.cid] = null;
     }

@@ -14,34 +14,84 @@ export function component({tagName, template = null}) {
   }
 }
 
-export function event(eventName) {
+export function route(path) {
   return function decorator(target, name, descriptor) {
-    if (!target.events) {
-      target.events = {};
+    if (!target.__proto__.routes) {
+      target.__proto__.routes = {};
     }
-    if (_.isFunction(target.events)) {
-      throw new Error('The event decorator is not compatible with an events method');
-      return;
+    if (!path) {
+      throw new Error('The event decorator requires a path argument');
     }
-    if (!eventName) {
-      throw new Error('The event decorator requires an eventName argument');
-    }
-    target.events[eventName] = name;
+    target.__proto__.routes[path] = name;
     return descriptor;
   }
 }
 
-// export function bind() {
+// export function event(eventName) {
 //   return function decorator(target, name, descriptor) {
-//     if (!_.isFunction(target[name])) {
-//       throw new Error('The bind decorator is only compatible with methods');
+//     if (!target.__proto__.events) {
+//       target.__proto__.events = {};
+//     }
+//     if (_.isFunction(target.__proto__.events)) {
+//       throw new Error('The event decorator is not compatible with an events method');
 //       return;
 //     }
-//     target[name] = _.bind(target[name], target);
+//     if (!eventName) {
+//       throw new Error('The event decorator requires an eventName argument');
+//     }
+//     target.__proto__.events[eventName] = name;
 //     return descriptor;
 //   }
 // }
 
+// export function bind() {
+//   return function decorator(target, name, descriptor) {
+//     if (!_.isFunction(target.__proto__[name])) {
+//       throw new Error('The bind decorator is only compatible with methods');
+//       return;
+//     }
+//     target.__proto__[name] = _.bind(target.__proto__[name], target);
+//     return descriptor;
+//   }
+// }
+
+
+// export function debounce(milliseconds) {
+//   return function decorator(target, name, descriptor) {
+//     target.__proto__.fnDebounced[name] = milliseconds;
+//     return descriptor;
+//   }
+// }
+
+/** 
+ * Decorates a class method so that it is debounced by the specified duration
+ * Inspired by https://github.com/bvaughn/debounce-decorator
+ * 
+ * @param  number duration   The amount of milliseconds
+ * 
+ * @return object Descriptor
+ */
+export function debounce (duration) {
+  return function decorator (target, key, descriptor) {
+    // Return a new descriptor
+    return {
+      configurable: true,
+      enumerable:   descriptor.enumerable,
+      get: function getter() {
+
+        // Attach this function to the instance (not the class)
+        Object.defineProperty(this, key, {
+          configurable: true,
+          enumerable:   descriptor.enumerable,
+          value:        _.debounce(descriptor.value, duration)
+        });
+
+        // Return the getter
+        return this[key];
+      }
+    }
+  }
+}
 
 /**
  * Took from http://babeljs.io/
@@ -56,12 +106,12 @@ function defineProperties(target, props) {
   }
 }
 
-export function defaults(defaultProps) {
-  return function decorator(target) {
-    target.prototype.defaults = defaultProps;
-    defineProperties(target.prototype, Object.keys(defaultProps));
-  }
-}
+// export function defaults(defaultProps) {
+//   return function decorator(target) {
+//     target.prototype.defaults = defaultProps;
+//     defineProperties(target.prototype, Object.keys(defaultProps));
+//   }
+// }
 
 export function props(value) {
   return function decorator(target) {

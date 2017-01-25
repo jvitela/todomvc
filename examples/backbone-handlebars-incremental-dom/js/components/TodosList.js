@@ -1,9 +1,7 @@
-import {component, bind}  from 'Lib/backbone-decorators'
+import {component}        from 'Lib/backbone-decorators'
 import ComponentView      from 'Components/ComponentView'
-import template           from 'Templates/todos-list.hbs'
-import _                  from 'underscore'
-
 import TodosCollection    from 'Models/TodosCollection'
+import template           from 'Templates/todos-list.hbs'
 
 const ENTER_KEY = 13;
 const ESC_KEY   = 27;
@@ -18,38 +16,29 @@ export default class TodosList extends ComponentView {
     this.listenTo(this.todos, "add remove change", this.render);
   }
 
-  setState({ todos, onremove }) {
+  setState({ todos, onChange, onCompleted, onEditing, onRemove }) {
     this.todos.set(todos.models);
-    this.removeTodo = onremove;
-  }
-
-  toggleCompleted(todo) {
-    todo.toggleCompleted();
-  }
-
-  toggleEditing(todo) {
-    todo.toggleEditing();
+    this.removeTodo      = onRemove;
+    this.editTodo        = onChange;
+    this.toggleEditing   = onEditing;
+    this.toggleCompleted = onCompleted;
   }
 
   onKeyDown(todo, event) {
-    if (event.which != ESC_KEY) {
-      return;
+    if (event.which === ESC_KEY) {
+      this.toggleEditing(todo);
     }
-    todo.toggleEditing();
   }
 
   onKeyPress(todo, event) {
-    if (event.which != ENTER_KEY) {
-      return;
+    if (event.which === ENTER_KEY) {
+      this.editTodo(todo, event.target.value);
     }
-    let title = event.target.value.trim();
-    if (!title) {
-      this.removeTodo(todo);
-      return;
+  }
+
+  afterRender() {
+    if (this.todos.findWhere({ editing: true})) {
+      this.$("input").select().focus();
     }
-    todo.set({
-      title:   title,
-      editing: false
-    });
   }
 }

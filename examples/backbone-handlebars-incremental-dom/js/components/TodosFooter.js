@@ -1,5 +1,5 @@
 import {component}     from 'Lib/backbone-decorators'
-import ComponentView   from 'Components/ComponentView'
+import ViewModel       from 'Components/ViewModel'
 import TodosCollection from 'Models/TodosCollection'
 import template        from 'Templates/todos-footer.hbs'
 import Backbone        from 'backbone'
@@ -8,7 +8,7 @@ import Backbone        from 'backbone'
   tagName: 'todos-footer',
   template: template
 })
-export default class TodosFooter extends ComponentView {
+export default class TodosFooter extends ViewModel {
   initialize() {
     this.filter    = new Backbone.Model();
     this.pending   = new TodosCollection();
@@ -21,16 +21,17 @@ export default class TodosFooter extends ComponentView {
 
   setState({ todos, filter, clearCompleted }) {
     let completed = todos.groupBy('completed');
-
-    this.filter.clear({ silent: true });
-    this.filter.set(filter.toJSON());
     this.pending.set(completed[false]  || []);
     this.completed.set(completed[true] || []);
+
+    // Reset the filter values
+    this.filter.clear({ silent: true });
+    this.filter.set(filter.toJSON());
+
     this.clearCompleted = clearCompleted;
   }
 
   get allVisible() {
-    console.log("allVisible::", this.filter.attributes);
     return Object.keys(this.filter.attributes).length === 0;
   }
 

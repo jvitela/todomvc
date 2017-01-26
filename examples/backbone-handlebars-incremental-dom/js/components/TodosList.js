@@ -1,5 +1,5 @@
 import {component}        from 'Lib/backbone-decorators'
-import ComponentView      from 'Components/ComponentView'
+import ViewModel          from 'Components/ViewModel'
 import TodosCollection    from 'Models/TodosCollection'
 import template           from 'Templates/todos-list.hbs'
 
@@ -10,7 +10,7 @@ const ESC_KEY   = 27;
   tagName:  'todos-list',
   template: template
 })
-export default class TodosList extends ComponentView {
+export default class TodosList extends ViewModel {
   initialize() {
     this.todos = new TodosCollection();
     this.listenTo(this.todos, "add remove change", this.render);

@@ -1,5 +1,5 @@
 import {component, debounce} from 'Lib/backbone-decorators'
-import ComponentView from 'Components/ComponentView'
+import ViewModel     from 'Components/ViewModel'
 import template      from 'Templates/todos-header.hbs'
 import Todo          from 'Models/Todo'
 
@@ -9,7 +9,7 @@ const ENTER_KEY = 13;
   tagName:  'todos-header',
   template: template
 })
-export default class TodosHeader extends ComponentView {
+export default class TodosHeader extends ViewModel {
   initialize() {
     this.todo = new Todo();
     this.listenTo(this.todo, 'change:title', this.render);

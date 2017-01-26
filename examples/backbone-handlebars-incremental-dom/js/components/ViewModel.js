@@ -1,8 +1,20 @@
 import _          from 'underscore'
 import Backbone   from 'backbone'
-// import {debounce} from 'Lib/backbone-decorators'
 
-export default class ComponentView extends Backbone.View {
+
+/**
+ * Base class for all components.
+ * 
+ * Implements the component's life cycle:
+ *     - constructor
+ *     - initialize
+ *     - setState
+ *     - getState
+ *     - beforeRender
+ *     - afterRender
+ *     - remove
+ */
+export default class ViewModel extends Backbone.View {
 
   getState() {
     return this;
@@ -19,7 +31,7 @@ export default class ComponentView extends Backbone.View {
 
   configureRouter() {
     if (!this.routes) {
-      throw new Error('ComponentView::configureRouter requires a routes attribute to be set. See "@route" decorator');
+      throw new Error('ViewModel::configureRouter requires a routes attribute to be set. See "@route" decorator');
     }
     let routes = _.mapObject(this.routes, (method) => {
       return _.bind(this[method], this);

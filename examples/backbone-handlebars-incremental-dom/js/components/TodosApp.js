@@ -1,5 +1,5 @@
 import {component, route} from 'Lib/backbone-decorators'
-import ComponentView   from 'Components/ComponentView'
+import ViewModel       from 'Components/ViewModel'
 import template        from 'Templates/todos-app.hbs'
 import TodosHeader     from 'Components/TodosHeader'
 import TodosList       from 'Components/TodosList'
@@ -11,7 +11,7 @@ import Backbone        from 'backbone'
   tagName:  'todos-app',
   template: template
 })
-export default class TodosApp extends ComponentView {
+export default class TodosApp extends ViewModel {
   initialize() {
     this.order  = 0;
     this.filter = new Backbone.Model();

@@ -1,5 +1,7 @@
-import handlebars from 'handlebars-incremental-dom';
+import handlebars from 'handlebars-incremental-dom'
+import RenderScheduler from 'Lib/RenderScheduler'
 
+export var   RenderQueue   = new RenderScheduler();
 var   ViewClasses   = {};
 var   ViewInstances = {};
 const VIEW_CID      = Symbol('view-model-cid');
@@ -18,10 +20,8 @@ function getViewInstance(node) {
  * Creates or retrieves a view for the given DOM element and runs the update method
  * @param  Element el       The DOM Element to associate to a View
  * @param  string  cmpName  The component tag name 
- * @param  Object  props    Properties map
- * @return Object  opts     Config options to pass to the template
  */
-function viewsFactory(el, cmpName, props, opts) {
+function viewsFactory(el, cmpName) {
   let cid  = el[VIEW_CID];
   let view = cid && ViewInstances[cid];
   if (!view) {
@@ -38,9 +38,23 @@ function viewsFactory(el, cmpName, props, opts) {
     // console.log('viewsFactory::create', view.cid);
   }
 
-  view.configureTemplate(opts);
-  view.setState(props);
   return view;
+}
+
+/**
+ * @param Element el         The DOM Element to associate to a View
+ * @param string  tagName    The component tag name 
+ * @param object  properties Properties map
+ * @param object  options    Config options to pass to the template
+ */
+function renderComponent(el, tagName, properties, options) {
+  handlebars.idom.skip();
+  let view = viewsFactory(el, tagName);
+  view.configureTemplate(options);
+  view.setState(properties);
+  RenderQueue.add(view.cid, () => {
+    view.render();
+  });
 }
 
 /**
@@ -100,7 +114,7 @@ function initialize() {
 
   registerHandlebarsHelpers();
 
-  handlebars.getComponentProxy = viewsFactory;
+  handlebars.renderComponent = renderComponent;
 
   // Attributes that *must* be set via a property on all elements.
   handlebars.idom.attributes.value     = handlebars.idom.applyProp;

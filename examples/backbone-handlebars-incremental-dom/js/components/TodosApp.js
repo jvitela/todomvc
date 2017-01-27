@@ -18,8 +18,8 @@ export default class TodosApp extends ViewModel {
     this.todos  = new TodosCollection();
 
     this.configureRouter();
-    this.listenTo(this.todos,  "add remove change", this.render);
-    this.listenTo(this.filter, "change", this.render);
+    this.listenTo(this.todos,  "add remove change", this.requestRender);
+    this.listenTo(this.filter, "change", this.requestRender);
   }
 
   createTodo(title) {

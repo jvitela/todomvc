@@ -12,14 +12,14 @@ const ENTER_KEY = 13;
 export default class TodosHeader extends ViewModel {
   initialize() {
     this.todo = new Todo();
-    this.listenTo(this.todo, 'change:title', this.render);
+    this.listenTo(this.todo, 'change:title', this.requestRender);
   }
 
   setState({ onInput }) {
     this.onInput = onInput;
   }
 
-  @debounce(300)
+  @debounce(200)
   inputChange(event) {
     let title = event.target.value.trim();
     if (title) {
@@ -27,6 +27,7 @@ export default class TodosHeader extends ViewModel {
     }
   }
 
+  @debounce(201)
   onEnter(event) {
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {

@@ -1,5 +1,6 @@
 import _          from 'underscore'
 import Backbone   from 'backbone'
+import {RenderQueue} from 'Lib/backbone-hbs-idom-adapter'
 
 
 /**
@@ -52,5 +53,11 @@ export default class ViewModel extends Backbone.View {
     this.afterRender();
 
     return this;
+  }
+
+  requestRender() {
+    RenderQueue.add(this.cid, () => {
+      this.render();
+    });
   }
 }

@@ -14,9 +14,9 @@ export default class TodosFooter extends ViewModel {
     this.pending   = new TodosCollection();
     this.completed = new TodosCollection();
 
-    this.listenTo(this.pending,   "add remove", this.render);
-    this.listenTo(this.completed, "add remove", this.render);
-    this.listenTo(this.filter,    "change",     this.render);
+    this.listenTo(this.pending,   "add remove", this.requestRender);
+    this.listenTo(this.completed, "add remove", this.requestRender);
+    this.listenTo(this.filter,    "change",     this.requestRender);
   }
 
   setState({ todos, filter, clearCompleted }) {

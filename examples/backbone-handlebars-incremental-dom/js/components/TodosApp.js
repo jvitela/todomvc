@@ -63,7 +63,7 @@ export default class TodosApp extends ViewModel {
   get visibleTodos() {
     let query = this.filter.toJSON();
     let list  = this.todos.where(query);
-    return new TodosCollection(list);
+    return list; // return Array of Todos
   }
 
   @route('active')

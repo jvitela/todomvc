@@ -1,7 +1,6 @@
-import _          from 'underscore'
-import Backbone   from 'backbone'
+import _             from 'underscore'
+import Backbone      from 'backbone'
 import {RenderQueue} from 'Lib/backbone-hbs-idom-adapter'
-
 
 /**
  * Base class for all components.

@@ -1,7 +1,7 @@
-import {component, debounce} from 'Lib/backbone-decorators'
-import ViewModel     from 'Components/ViewModel'
-import template      from 'Templates/todos-header.hbs'
-import Todo          from 'Models/Todo'
+import {component} from 'Lib/backbone-decorators'
+import ViewModel   from 'Components/ViewModel'
+import template    from 'Templates/todos-header.hbs'
+import Todo        from 'Models/Todo'
 
 const ENTER_KEY = 13;
 
@@ -19,7 +19,6 @@ export default class TodosHeader extends ViewModel {
     this.onInput = onInput;
   }
 
-  @debounce(200)
   inputChange(event) {
     let title = event.target.value.trim();
     if (title) {
@@ -27,7 +26,6 @@ export default class TodosHeader extends ViewModel {
     }
   }
 
-  @debounce(201)
   onEnter(event) {
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {

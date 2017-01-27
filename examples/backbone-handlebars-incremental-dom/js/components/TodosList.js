@@ -17,7 +17,7 @@ export default class TodosList extends ViewModel {
   }
 
   setState({ todos, onChange, onCompleted, onEditing, onRemove }) {
-    this.todos.set(todos.models);
+    this.todos.set(todos);
     this.removeTodo      = onRemove;
     this.editTodo        = onChange;
     this.toggleEditing   = onEditing;

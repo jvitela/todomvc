@@ -4,8 +4,8 @@ import Adapter    from 'Lib/backbone-hbs-idom-adapter'
 
 export function component({tagName, template = null}) {
   return function decorator(target) {
-    if (typeof template == "string") {
-      template = handlebars.compile(template, {"name": tagName});
+    if (typeof template == 'string') {
+      template = handlebars.compile(template, {'name': tagName});
     }
 
     target.prototype.tagName  = tagName;

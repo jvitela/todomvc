@@ -13,7 +13,7 @@ const ESC_KEY   = 27;
 export default class TodosList extends ViewModel {
   initialize() {
     this.todos = new TodosCollection();
-    this.listenTo(this.todos, "add remove change", this.requestRender);
+    this.listenTo(this.todos, 'add remove change', this.requestRender);
   }
 
   setState({ todos, onChange, onCompleted, onEditing, onRemove }) {
@@ -38,7 +38,7 @@ export default class TodosList extends ViewModel {
 
   afterRender() {
     if (this.todos.findWhere({ editing: true})) {
-      this.$("input").select().focus();
+      this.$('input').select().focus();
     }
   }
 }

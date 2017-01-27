@@ -79,7 +79,7 @@ function garbageCollector(nodes) {
  * @param  Class  View
  */
 function registerComponent(tagName, View) {
-  if (typeof View.prototype.template === "string") {
+  if (typeof View.prototype.template === 'string') {
     // console.log(`registerComponent: Compiling template for ${tagName} ...`);
     compile(View.prototype.template, {'name': tagName});
   }

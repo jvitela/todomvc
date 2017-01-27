@@ -56,7 +56,7 @@ export default class RenderScheduler {
       return a.order - b.order;
     });    
 
-    console.log(" ============= START ============= ");
+    console.log(' ---------- start ---------- ');
     while (this.pending.length) {
       data = this.pending.shift();
       data.args.length ? 
@@ -65,7 +65,7 @@ export default class RenderScheduler {
       // delete this.waiting[data.id];
       this.waiting[data.id] = undefined;
     }
-    console.log(" ============= END ============= ");
+    console.log(' ---------- end ---------- ');
     this.frameId = null;
   }
 }

@@ -18,8 +18,8 @@ export default class TodosApp extends ViewModel {
     this.todos  = new TodosCollection();
 
     this.configureRouter();
-    this.listenTo(this.todos,  "add remove change", this.requestRender);
-    this.listenTo(this.filter, "change", this.requestRender);
+    this.listenTo(this.todos,  'add remove change', this.requestRender);
+    this.listenTo(this.filter, 'change', this.requestRender);
   }
 
   createTodo(title) {
@@ -40,16 +40,17 @@ export default class TodosApp extends ViewModel {
   }
 
   clearCompleted() {
-    let completed = this.todos.where({ completed:true });
-    this.todos.remove(completed);
+    this.todos.clearCompleted();
   }
 
   editTitle(todo, title) {
     title = title.trim();
+
     if (!title) {
       this.removeTodo(todo);
       return;
     }
+
     todo.set({
       title:   title,
       editing: false

@@ -29,8 +29,8 @@ export default class TodosHeader extends ViewModel {
   onEnter(event) {
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {
-      this.todo.title = '';
       this.onInput(title);
+      this.todo.title = '';
     }
   }
 }

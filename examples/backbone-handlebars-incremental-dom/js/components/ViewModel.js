@@ -45,18 +45,24 @@ export default class ViewModel extends Backbone.View {
   render() {
     let data = this.getState();
 
-    console.log(this.el.tagName + ':' + this.cid);
-
     this.beforeRender();
-    this.template(this.el, data, this._templateOptions);
-    this.afterRender();
+
+    RenderQueue.addNext(this.cid, () => {
+      console.log(this.el.tagName + ':' + this.cid);
+      this.template(this.el, data, this._templateOptions);
+    });
+
+    RenderQueue.addTail(this.cid + 'z', () => {
+      console.log(this.el.tagName + ':' + this.cid + 'z');
+      this.afterRender();
+    });
 
     return this;
   }
 
-  requestRender() {
-    RenderQueue.add(this.cid, () => {
-      this.render();
-    });
-  }
+  // requestRender() {
+  //   RenderQueue.add(this.cid, () => {
+  //     this.render();
+  //   });
+  // }
 }

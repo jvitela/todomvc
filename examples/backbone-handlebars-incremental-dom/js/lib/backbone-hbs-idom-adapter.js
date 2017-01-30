@@ -52,9 +52,8 @@ function renderComponent(el, tagName, properties, options) {
   let view = viewsFactory(el, tagName);
   view.configureTemplate(options);
   view.setState(properties);
-  RenderQueue.add(view.cid, () => {
-    view.render();
-  });
+  view.render();
+  // RenderQueue.addNext(view.cid, () => { });
 }
 
 /**

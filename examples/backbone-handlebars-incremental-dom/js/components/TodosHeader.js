@@ -12,7 +12,7 @@ const ENTER_KEY = 13;
 export default class TodosHeader extends ViewModel {
   initialize() {
     this.todo = new Todo();
-    this.listenTo(this.todo, 'change:title', this.requestRender);
+    this.listenTo(this.todo, 'change:title', this.render);
   }
 
   setState({ onInput }) {

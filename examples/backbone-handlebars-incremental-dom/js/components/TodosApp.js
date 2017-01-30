@@ -1,9 +1,6 @@
 import {component, route} from 'Lib/backbone-decorators'
 import ViewModel       from 'Components/ViewModel'
 import template        from 'Templates/todos-app.hbs'
-import TodosHeader     from 'Components/TodosHeader'
-import TodosList       from 'Components/TodosList'
-import TodosFooter     from 'Components/TodosFooter'
 import TodosCollection from 'Models/TodosCollection'
 import Backbone        from 'backbone'
 
@@ -18,8 +15,8 @@ export default class TodosApp extends ViewModel {
     this.todos  = new TodosCollection();
 
     this.configureRouter();
-    this.listenTo(this.todos,  'add remove change', this.requestRender);
-    this.listenTo(this.filter, 'change', this.requestRender);
+    this.listenTo(this.todos,  'add remove change', this.render);
+    this.listenTo(this.filter, 'change', this.render);
   }
 
   createTodo(title) {
@@ -36,7 +33,7 @@ export default class TodosApp extends ViewModel {
   }
 
   toggleEditing(todo) {
-    todo.toggleEditing();
+    this.todos.toggleEditing(todo);
   }
 
   clearCompleted() {

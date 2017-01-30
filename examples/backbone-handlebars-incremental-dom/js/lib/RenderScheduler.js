@@ -13,15 +13,25 @@ export default class RenderScheduler {
    * Schedule a view to be rendered, if it was scheduled before
    * the previous entry will be deleted.
    */
-  add(key, method, args) {
-    let idx = this.waiting[key];
-
-    let task = {
+  addNext(key, method, args) {
+    this.add(key, {
       id:     key,
       method: method,
       args:   args || [],
       order:  ++this.order
-    };
+    });
+  }
+
+  addTail(key, method, args) {
+    this.add(key, {
+      id:     key,
+      method: method,
+      args:   args || []
+    });
+  }
+
+  add(key, task) {
+    let idx = this.waiting[key];
     // Skip if the view is already waiting to be rendered
     if (idx >= 0) { 
       this.pending[key] = task;
@@ -41,7 +51,7 @@ export default class RenderScheduler {
   createTask(key, method) {
     return () => {
       this.active ?
-        this.add(key, method, arguments):
+        this.addNext(key, method, arguments):
         method.apply(null, arguments);
     }
   }
@@ -53,10 +63,12 @@ export default class RenderScheduler {
     let data;
 
     this.pending = this.pending.sort(function(a,b) {
+      if (a.order === undefined) { return  1; }
+      if (b.order === undefined) { return -1; }
       return a.order - b.order;
-    });    
+    });
 
-    console.log(' ---------- start ---------- ');
+    // console.log(' ---------- start ---------- ');
     while (this.pending.length) {
       data = this.pending.shift();
       data.args.length ? 
@@ -65,7 +77,7 @@ export default class RenderScheduler {
       // delete this.waiting[data.id];
       this.waiting[data.id] = undefined;
     }
-    console.log(' ---------- end ---------- ');
+    // console.log(' ---------- end ---------- ');
     this.frameId = null;
   }
 }

@@ -4,6 +4,8 @@ import template        from 'Templates/todos-app.hbs'
 import TodosCollection from 'Models/TodosCollection'
 import Backbone        from 'backbone'
 
+const STORAGE_ID = 'TODOSMVC';
+
 @component({
   tagName:  'todos-app',
   template: template
@@ -13,6 +15,11 @@ export default class TodosApp extends ViewModel {
     this.order  = 0;
     this.filter = new Backbone.Model();
     this.todos  = new TodosCollection();
+
+    this.todos.initLocalStorage(STORAGE_ID);
+    if (this.todos.length) {
+      this.order = this.todos.maxOrder;
+    }
 
     this.configureRouter();
     this.listenTo(this.todos,  'add remove change', this.render);

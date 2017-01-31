@@ -17,7 +17,9 @@
         class="edit {{if editing 'on'}}" 
         value={{title}}
         onkeypress={{call ../onKeyPress this}} 
-        onkeydown={{call ../onKeyDown this}} />
+        onkeydown={{call ../onKeyDown this}}
+        onblur={{call ../toggleEditing this}}
+        />
     </li>
     {{/each}}
   </ul>

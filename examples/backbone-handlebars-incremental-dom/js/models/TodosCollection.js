@@ -7,13 +7,16 @@ import Todo     from 'Models/Todo'
   comparator: 'order'
 })
 export default class TodosCollection extends Backbone.Collection {
-  
+  initialize() {
+    this.listenTo(this, 'change:editing', this.toggleOthers);
+  }
+
   initLocalStorage(storageId) {
     let todos = localStorage.getItem(storageId);
     todos && this.set(JSON.parse(todos));
 
     this.storageId = storageId;
-    this.listenTo(this, "add remove change:title change:completed", this.saveToLocalStorage);
+    this.listenTo(this, 'add remove change:title change:completed', this.saveToLocalStorage);
   }
 
   clearCompleted() {
@@ -21,14 +24,17 @@ export default class TodosCollection extends Backbone.Collection {
     this.remove(completed);
   }
 
-  toggleEditing(todo) {
-    let todos = todo ? this.reject(todo) : this.models;
-    todos.forEach((t) => { t.editing = false; });
-    todo && todo.toggleEditing();
-  }
-
   get maxOrder() {
     return Math.max.apply(null, this.pluck('order'));
+  }
+
+  @debounce(100)
+  toggleOthers(todo) {
+    if (!todo.editing) {
+      return;
+    }
+    let todos = this.reject(todo);
+    todos.forEach((t) => { t.editing = false; });
   }
 
   @debounce(100)

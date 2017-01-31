@@ -40,7 +40,7 @@ export default class TodosApp extends ViewModel {
   }
 
   toggleEditing(todo) {
-    this.todos.toggleEditing(todo);
+    todo.toggleEditing();
   }
 
   clearCompleted() {

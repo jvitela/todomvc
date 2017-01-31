@@ -14,7 +14,7 @@
         <button class="destroy" onclick={{call ../removeTodo this}}></button>
       </div>
       <input 
-        class="edit" 
+        class="edit {{if editing 'on'}}" 
         value={{title}}
         onkeypress={{call ../onKeyPress this}} 
         onkeydown={{call ../onKeyDown this}} />

@@ -11,6 +11,7 @@ import {RenderQueue} from 'Lib/backbone-hbs-idom-adapter'
  *     - setState
  *     - getState
  *     - beforeRender
+ *     - render
  *     - afterRender
  *     - remove
  */
@@ -50,19 +51,9 @@ export default class ViewModel extends Backbone.View {
     RenderQueue.addNext(this.cid, () => {
       console.log(this.el.tagName + ':' + this.cid);
       this.template(this.el, data, this._templateOptions);
-    });
-
-    RenderQueue.addTail(this.cid + 'z', () => {
-      console.log(this.el.tagName + ':' + this.cid + 'z');
       this.afterRender();
     });
 
     return this;
   }
-
-  // requestRender() {
-  //   RenderQueue.add(this.cid, () => {
-  //     this.render();
-  //   });
-  // }
 }

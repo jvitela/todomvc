@@ -38,7 +38,7 @@ export default class TodosList extends ViewModel {
 
   afterRender() {
     if (this.todos.findWhere({ editing: true})) {
-      this.$('input').select().focus();
+      this.$('input.edit.on').select().focus();
     }
   }
 }

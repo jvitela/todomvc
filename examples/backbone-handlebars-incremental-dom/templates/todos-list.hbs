@@ -13,17 +13,18 @@
         <input 
           class="toggle" 
           type="checkbox" 
-          {{if completed checked=true}}
-          onclick={{call ../toggleCompleted this}} />
+          checked={{completed}}
+          onclick={{call ../toggleCompleted this}}
+          />
         <label>{{title}}</label>
         <button class="destroy" onclick={{call ../removeTodo this}}></button>
       </div>
       <input 
-        class="edit {{if editing 'on'}}" 
+        class="edit {{if editing 'on'}}"
         value={{title}}
         onkeypress={{call ../onKeyPress this}} 
-        onkeydown={{call ../onKeyDown this}}
-        onblur={{call ../toggleEditing this}}
+        onkeydown={{call ../onKeyDown   this}}
+        onblur={{call ../toggleEditing  this}}
         />
     </li>
     {{/each}}

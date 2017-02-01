@@ -28,7 +28,6 @@ export default class TodosCollection extends Backbone.Collection {
     return Math.max.apply(null, this.pluck('order'));
   }
 
-  @debounce(100)
   toggleOthers(todo) {
     if (!todo.editing) {
       return;

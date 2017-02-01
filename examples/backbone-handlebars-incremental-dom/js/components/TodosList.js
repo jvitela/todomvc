@@ -16,12 +16,13 @@ export default class TodosList extends ViewModel {
     this.listenTo(this.todos, 'add remove change', this.render);
   }
 
-  setState({ todos, onChange, onCompleted, onEditing, onRemove }) {
+  setState({ todos, onChange, onCompleted, onEditing, onRemove, onCompleteAll }) {
     this.todos.set(todos);
     this.removeTodo      = onRemove;
     this.editTodo        = onChange;
     this.toggleEditing   = onEditing;
     this.toggleCompleted = onCompleted;
+    this.completeAll     = onCompleteAll;
   }
 
   onKeyDown(todo, event) {
@@ -34,6 +35,15 @@ export default class TodosList extends ViewModel {
     if (event.which === ENTER_KEY) {
       this.editTodo(todo, event.target.value);
     }
+  }
+
+  onToggleAll(event) {
+    this.completeAll(event.target.checked);
+  }
+
+  get allCompleted() {
+    let pending = this.todos.findWhere({ completed: false });
+    return this.todos.length && !pending;
   }
 
   afterRender() {

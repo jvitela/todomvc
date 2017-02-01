@@ -1,5 +1,10 @@
 <section class="main">
-  <input class="toggle-all" type="checkbox"/>
+  <input 
+    class="toggle-all" 
+    type="checkbox" 
+    onclick={{onToggleAll}}
+    checked={{allCompleted}}
+    />
   <label for="toggle-all">Mark all as complete</label>
   <ul class="todo-list">
     {{#each todos.models}}

@@ -61,6 +61,10 @@ export default class TodosApp extends ViewModel {
     });    
   }
 
+  toggleAllCompleted(completed) {
+    this.todos.invoke('set', 'completed', completed);
+  }
+
   /**
    * Filters the list of todos
    * @return TodosCollection containing the filtered items.

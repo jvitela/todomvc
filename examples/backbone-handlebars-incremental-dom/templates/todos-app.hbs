@@ -6,12 +6,13 @@
 
 {{#if todos.length}}
 <todos-list 
-  todos={{visibleTodos}} 
+  todos={{visibleTodos}}
   onremove={{removeTodo}} 
   onchange={{editTitle}} 
   oncompleted={{toggleCompleted}}
   onediting={{toggleEditing}}
   oncomplete-all={{toggleAllCompleted}}
+  all-completed={{allCompleted}}
   ></todos-list>
 
 <todos-footer 

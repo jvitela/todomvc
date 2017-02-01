@@ -39,8 +39,10 @@ export default class TodosApp extends ViewModel {
     todo.toggleCompleted();
   }
 
-  toggleEditing(todo) {
-    todo.toggleEditing();
+  toggleEditing(todo, value) {
+    if (todo.editing !== value) {
+      todo.toggleEditing();
+    }
   }
 
   clearCompleted() {
@@ -73,6 +75,11 @@ export default class TodosApp extends ViewModel {
     let query = this.filter.toJSON();
     let list  = this.todos.where(query);
     return list; // return Array of Todos
+  }
+
+  get allCompleted() {
+    let pending = this.todos.findWhere({ completed: false });
+    return this.todos.length && !pending;
   }
 
   @route('active')

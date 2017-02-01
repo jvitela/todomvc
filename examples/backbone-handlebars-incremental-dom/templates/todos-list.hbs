@@ -2,14 +2,14 @@
   <input 
     class="toggle-all" 
     type="checkbox" 
-    onclick={{onToggleAll}}
+    onclick={{toggleAll}}
     checked={{allCompleted}}
     />
   <label for="toggle-all">Mark all as complete</label>
   <ul class="todo-list">
     {{#each todos.models}}
     <li class="{{if completed 'completed'}} {{if editing 'editing'}}">
-      <div class="view" ondblclick={{call ../toggleEditing this}}>
+      <div class="view" ondblclick={{call ../toggleEditing this true}}>
         <input 
           class="toggle" 
           type="checkbox" 
@@ -22,9 +22,8 @@
       <input 
         class="edit {{if editing 'on'}}"
         value={{title}}
-        onkeypress={{call ../onKeyPress this}} 
-        onkeydown={{call ../onKeyDown   this}}
-        onblur={{call ../toggleEditing  this}}
+        onkeydown={{call ../editTodo this}}
+        onblur={{call ../toggleEditing this false}}
         />
     </li>
     {{/each}}

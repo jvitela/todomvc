@@ -16,34 +16,29 @@ export default class TodosList extends ViewModel {
     this.listenTo(this.todos, 'add remove change', this.render);
   }
 
-  setState({ todos, onChange, onCompleted, onEditing, onRemove, onCompleteAll }) {
+  setState({ todos, onChange, onCompleted, onEditing, onRemove, onCompleteAll, allCompleted }) {
     this.todos.set(todos);
     this.removeTodo      = onRemove;
-    this.editTodo        = onChange;
+    this.editTitle       = onChange;
     this.toggleEditing   = onEditing;
     this.toggleCompleted = onCompleted;
     this.completeAll     = onCompleteAll;
+    this.allCompleted    = allCompleted;
   }
 
-  onKeyDown(todo, event) {
-    if (event.which === ESC_KEY) {
-      this.toggleEditing(todo);
+  editTodo(todo, event) {
+    switch (event.which) {
+      case ESC_KEY:
+        this.toggleEditing(todo, false);
+        break;
+      case ENTER_KEY:
+        this.editTitle(todo, event.target.value);
+        break;
     }
   }
 
-  onKeyPress(todo, event) {
-    if (event.which === ENTER_KEY) {
-      this.editTodo(todo, event.target.value);
-    }
-  }
-
-  onToggleAll(event) {
+  toggleAll(event) {
     this.completeAll(event.target.checked);
-  }
-
-  get allCompleted() {
-    let pending = this.todos.findWhere({ completed: false });
-    return this.todos.length && !pending;
   }
 
   afterRender() {

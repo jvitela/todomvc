@@ -49,7 +49,7 @@ export default class ViewModel extends Backbone.View {
     this.beforeRender();
 
     RenderQueue.addNext(this.cid, () => {
-      console.log(this.el.tagName + ':' + this.cid);
+      // console.log(this.el.tagName + ':' + this.cid);
       this.template(this.el, data, this._templateOptions);
       this.afterRender();
     });

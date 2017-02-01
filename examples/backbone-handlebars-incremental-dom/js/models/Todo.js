@@ -11,12 +11,7 @@ import Backbone from 'backbone'
 	}
 })
 export default class Todo extends Backbone.Model {
-  toggleEditing() {
-  	// this.set({ editing: !this.get('editing') });
-    this.editing = !this.editing;
-  }
   toggleCompleted() {
-  	// this.set({ completed: !this.get('completed') });
     this.completed = !this.completed;
   }
 }

@@ -40,9 +40,7 @@ export default class TodosApp extends ViewModel {
   }
 
   toggleEditing(todo, value) {
-    if (todo.editing !== value) {
-      todo.toggleEditing();
-    }
+    todo.editing = !!value;
   }
 
   clearCompleted() {
@@ -77,6 +75,9 @@ export default class TodosApp extends ViewModel {
     return list; // return Array of Todos
   }
 
+  /**
+   * @return boolean True if the list contains items and all are completed
+   */
   get allCompleted() {
     let pending = this.todos.findWhere({ completed: false });
     return this.todos.length && !pending;

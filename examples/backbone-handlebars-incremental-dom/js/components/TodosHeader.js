@@ -16,20 +16,20 @@ export default class TodosHeader extends ViewModel {
   }
 
   setState({ onInput }) {
-    this.onInput = onInput;
+    this.saveTodo = onInput;
   }
 
-  inputChange(event) {
+  setTitle(event) {
     let title = event.target.value.trim();
     if (title) {
       this.todo.title = title;
     }
   }
 
-  onEnter(event) {
+  saveOnEnter(event) {
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {
-      this.onInput(title);
+      this.saveTodo(title);
       this.todo.title = '';
     }
   }

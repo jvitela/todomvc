@@ -1,4 +1,4 @@
-import handlebars from 'handlebars-incremental-dom'
+import {handlebars, incrementalDOM} from 'handlebars-incremental-dom/runtime'
 import RenderScheduler from 'Lib/RenderScheduler'
 
 export var   RenderQueue   = new RenderScheduler();
@@ -48,7 +48,7 @@ function viewsFactory(el, cmpName) {
  * @param object  options    Config options to pass to the template
  */
 function renderComponent(el, tagName, properties, options) {
-  handlebars.idom.skip();
+  incrementalDOM.skip();
   let view = viewsFactory(el, tagName);
   view.configureTemplate(options);
   view.setState(properties);
@@ -116,13 +116,13 @@ function initialize() {
   handlebars.renderComponent = renderComponent;
 
   // Attributes that *must* be set via a property on all elements.
-  handlebars.idom.attributes.value     = handlebars.idom.applyProp;
-  handlebars.idom.attributes.checked   = handlebars.idom.applyProp;
-  handlebars.idom.attributes.className = handlebars.idom.applyProp;
-  handlebars.idom.attributes.disabled  = handlebars.idom.applyProp;
+  incrementalDOM.attributes.value     = incrementalDOM.applyProp;
+  incrementalDOM.attributes.checked   = incrementalDOM.applyProp;
+  incrementalDOM.attributes.className = incrementalDOM.applyProp;
+  incrementalDOM.attributes.disabled  = incrementalDOM.applyProp;
 
   // Notifications
-  handlebars.idom.notifications.nodesDeleted = garbageCollector;
+  incrementalDOM.notifications.nodesDeleted = garbageCollector;
 }
 
 window.handlebars = handlebars;

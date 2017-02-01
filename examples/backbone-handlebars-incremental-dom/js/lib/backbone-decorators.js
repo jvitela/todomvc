@@ -1,13 +1,12 @@
 import _          from 'underscore'
-import handlebars from 'handlebars-incremental-dom'
+// import handlebars from 'handlebars-incremental-dom'
 import Adapter    from 'Lib/backbone-hbs-idom-adapter'
 
 export function component({tagName, template = null}) {
   return function decorator(target) {
-    if (typeof template == 'string') {
-      template = handlebars.compile(template, {'name': tagName});
-    }
-
+    // if (typeof template == 'string') {
+    //   template = handlebars.compile(template, {'name': tagName});
+    // }
     target.prototype.tagName  = tagName;
     target.prototype.template = template;
     Adapter.registerComponent(tagName, target);

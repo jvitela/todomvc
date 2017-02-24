@@ -1,4 +1,4 @@
-import {component} from 'Lib/backbone-decorators'
+import {component, bindable} from 'Lib/backbone-decorators'
 import ViewModel   from 'Components/ViewModel'
 import template    from 'Templates/todos-header.hbs'
 import Todo        from 'Models/Todo'
@@ -19,6 +19,7 @@ export default class TodosHeader extends ViewModel {
     this.saveTodo = onInput;
   }
 
+  @bindable()
   setTitle(event) {
     let title = event.target.value.trim();
     if (title) {
@@ -26,6 +27,7 @@ export default class TodosHeader extends ViewModel {
     }
   }
 
+  @bindable()
   saveOnEnter(event) {
     let title = this.todo.title;
     if (title && event.which === ENTER_KEY) {

@@ -1,7 +1,7 @@
-import {component}        from 'Lib/backbone-decorators'
-import ViewModel          from 'Components/ViewModel'
-import TodosCollection    from 'Models/TodosCollection'
-import template           from 'Templates/todos-list.hbs'
+import {component, bindable} from 'Lib/backbone-decorators'
+import ViewModel       from 'Components/ViewModel'
+import TodosCollection from 'Models/TodosCollection'
+import template        from 'Templates/todos-list.hbs'
 
 const ENTER_KEY = 13;
 const ESC_KEY   = 27;
@@ -26,6 +26,7 @@ export default class TodosList extends ViewModel {
     this.allCompleted    = allCompleted;
   }
 
+  @bindable()
   editTodo(todo, event) {
     switch (event.which) {
       case ESC_KEY:
@@ -37,6 +38,7 @@ export default class TodosList extends ViewModel {
     }
   }
 
+  @bindable()
   toggleAll(event) {
     this.completeAll(event.target.checked);
   }

@@ -1,4 +1,4 @@
-import {component, route} from 'Lib/backbone-decorators'
+import {component, bindable, route} from 'Lib/backbone-decorators'
 import ViewModel       from 'Components/ViewModel'
 import template        from 'Templates/todos-app.hbs'
 import TodosCollection from 'Models/TodosCollection'
@@ -26,27 +26,33 @@ export default class TodosApp extends ViewModel {
     this.listenTo(this.filter, 'change', this.render);
   }
 
+  @bindable()
   createTodo(title) {
     let order = ++this.order;
     this.todos.add({ title, order });
   }
 
+  @bindable()
   removeTodo(todo) {
     this.todos.remove(todo);
   }
 
+  @bindable()
   toggleCompleted(todo) {
     todo.toggleCompleted();
   }
 
+  @bindable()
   toggleEditing(todo, value) {
     todo.editing = !!value;
   }
 
+  @bindable()
   clearCompleted() {
     this.todos.clearCompleted();
   }
 
+  @bindable()
   editTitle(todo, title) {
     title = title.trim();
 
@@ -61,6 +67,7 @@ export default class TodosApp extends ViewModel {
     });    
   }
 
+  @bindable()
   toggleAllCompleted(completed) {
     this.todos.invoke('set', 'completed', completed);
   }

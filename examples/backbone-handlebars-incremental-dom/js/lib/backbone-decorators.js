@@ -15,13 +15,13 @@ export function component({tagName, template = null}) {
 
 export function route(path) {
   return function decorator(target, name, descriptor) {
-    if (!target.__proto__.routes) {
-      target.__proto__.routes = {};
+    if (!target._routes) {
+      target._routes = {};
     }
     if (!path) {
       throw new Error('The event decorator requires a path argument');
     }
-    target.__proto__.routes[path] = name;
+    target._routes[path] = name;
     return descriptor;
   }
 }
@@ -43,16 +43,19 @@ export function route(path) {
 //   }
 // }
 
-// export function bind() {
-//   return function decorator(target, name, descriptor) {
-//     if (!_.isFunction(target.__proto__[name])) {
-//       throw new Error('The bind decorator is only compatible with methods');
-//       return;
-//     }
-//     target.__proto__[name] = _.bind(target.__proto__[name], target);
-//     return descriptor;
-//   }
-// }
+export function bindable() {
+  return function decorator(target, name, descriptor) {
+    if (!_.isFunction(target[name])) {
+      throw new Error('The bindable decorator is only compatible with methods');
+      return;
+    }
+    if (!target._bindables) {
+      target._bindables = {};
+    }
+    target._bindables[name] = {binded: false}; 
+    return descriptor;
+  }
+}
 
 
 // export function debounce(milliseconds) {

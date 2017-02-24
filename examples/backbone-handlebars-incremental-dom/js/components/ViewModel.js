@@ -18,6 +18,9 @@ import {RenderQueue} from 'Lib/backbone-hbs-idom-adapter'
 export default class ViewModel extends Backbone.View {
 
   getState() {
+    if (this.configureBindables) {
+      this.configureBindables();
+    }
     return this;
   }
 
@@ -31,13 +34,26 @@ export default class ViewModel extends Backbone.View {
   }
 
   configureRouter() {
-    if (!this.routes) {
+    if (!this._routes) {
       throw new Error('ViewModel::configureRouter requires a routes attribute to be set. See "@route" decorator');
     }
-    let routes = _.mapObject(this.routes, (method) => {
+    let routes = _.mapObject(this._routes, (method) => {
       return _.bind(this[method], this);
     });
     this.router = new Backbone.Router({ routes });
+  }
+
+  configureBindables() {
+    console.log("configureBindables start");
+    _.each(this._bindables, (cfg, method) => {
+      if (cfg.binded) { 
+        return; 
+      }
+      this[method] = _.bind(this[method], this);
+      cfg.binded   = true;
+    });
+    // Execute only once per instance
+    this.configureBindables = false;
   }
 
   beforeRender() {}
